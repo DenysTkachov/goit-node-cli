@@ -1,9 +1,5 @@
-import { readFile, writeFile } from "fs/promises";
-import { fileURLToPath } from "url";
-import path from "path";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const { readFile, writeFile } = require("fs/promises");
+const path = require("path");
 
 const contactsPath = path.join(__dirname, "db", "contacts.json");
 
@@ -57,5 +53,4 @@ async function addContact(name, email, phone) {
   return newContact;
 }
 
-export { listContacts, getContactById, removeContact, addContact };
-
+module.exports = { listContacts, getContactById, removeContact, addContact };

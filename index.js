@@ -1,15 +1,21 @@
-
-
-
-import {
+const {
   listContacts,
   getContactById,
   addContact,
   removeContact,
-} from "./contacts.js";
+} = require("./contacts");
 
-import yargs from "yargs";
-const argv = yargs(process.argv.slice(2)).argv;
+const { program } = require("commander");
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
+
+program.parse();
+
+const options = program.opts();
 
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
@@ -30,12 +36,11 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     default:
+      console.log("Options:", options);
       console.warn("\x1B[31m Unknown action type!");
   }
 }
 
 (async () => {
-  await invokeAction(argv);
+  await invokeAction(options);
 })();
-
-
